@@ -15,7 +15,8 @@ class ClientManager(object):
         return self.__nick
 
     def send(self, data):
-        return self.__server.loop.sock_sendall(self.__conn, data.encode('utf8'))
+        data = {'message': data, 'clients': self.__server.nicks}
+        return self.__server.loop.sock_sendall(self.__conn, str(data).encode('utf8'))
 
     @asyncio.coroutine
     def client_handler(self):
@@ -46,7 +47,7 @@ class ClientManager(object):
 
             if self.__nick is None:
                 self.__nick = dicionario['nick']
-                message = message='{} entered the chat'.format(self.__nick)
+                message = '{} entered the chat'.format(self.__nick)
             else:
                 to = dicionario['to']
                 message = 'From {} to {}: {}'.format(self.__nick, to, dicionario['message'])

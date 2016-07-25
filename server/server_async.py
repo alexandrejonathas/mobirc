@@ -16,6 +16,7 @@ class Server(object):
         self._serv_sock.bind((host,port))
         self._serv_sock.listen(5)
         self.__clients = []
+        self.__nicks = []
         asyncio.Task(self._server())
         print('Server is open {}:{}'.format(host, port))
 
@@ -26,9 +27,17 @@ class Server(object):
         '''
         return self.__clients
 
+    @property
+    def nicks(self):
+        for client in self.clients:
+            if client.nick not in self.__nicks:
+                self.__nicks.append(client.nick)
+        return self.__nicks
+
     def remove(self, client):
         self.__clients.remove(client)
-        self.broadcast(to='all', message='Client {} quit!\n'.format(client.addr))
+        self.__nicks.remove(client.nick)
+        self.broadcast(to='all', message='{} quit!\n'.format(client.nick))
 
     def broadcast(self, to, message):
         '''
