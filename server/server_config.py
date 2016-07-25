@@ -4,4 +4,4 @@ address = dict({
 })
 
 IDENTIFY_BUFFER = 64
-RECEIVE_BUFFER = 512
+MESSAGE_BUFFER = 1024
