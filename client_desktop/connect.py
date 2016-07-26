@@ -12,7 +12,9 @@ from client_controller import ClientController
 
 from chat import Chat
 
-form_class = uic.loadUiType('connect.ui')[0]
+import os
+
+form_class = uic.loadUiType(os.path.join(config.TEMPLATE_DIR, 'connect.ui'))[0]
 
 class Connect(QtWidgets.QDialog, form_class):
     def __init__(self, controller, parent=None):

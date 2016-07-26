@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import sys
 from threading import Thread
 
@@ -10,7 +11,8 @@ import client_config as config
 
 import ast
 
-form_class = uic.loadUiType('chat.ui')[0]
+import os
+form_class = uic.loadUiType(os.path.join(config.TEMPLATE_DIR, 'chat.ui'))[0]
 
 class Chat(QtWidgets.QDialog, form_class):
     def __init__(self, controller, parent=None):
